@@ -46,17 +46,45 @@ def graficarMedia():
     plt.title("Evolución de la Media")
     blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
     plt.legend(handles=[blue_patch])
-    plt.xlabel('Tamaño de muestra')
-    plt.ylabel('Valor')
+    plt.xlabel('Tirada')
+    plt.ylabel('Valor de la media')
     plt.show()
 
+def graficarMediana():
+    plt.plot(medianaList) 
+    plt.title("Evolución de la Mediana")
+    blue_patch = mpatches.Patch(color='red', label='Valor de la mediana en los distintos puntos')
+    plt.legend(handles=[blue_patch])
+    plt.xlabel('Tirada')
+    plt.ylabel('Valor de la mediana')
+    plt.show()
 
+def graficarModa():
+    numeros = []
+    cantidades = []
+    
+    for y in modaList:
+        numeros.append(y[0][0])
+        cantidades.append(y[1][0])
+    plt.bar(range(SIZE),numeros,edgecolor="black") 
+    plt.xticks(range(SIZE),range(SIZE))
+    plt.ylim(min(numeros)-2,max(numeros)+1)
+    plt.title("Moda a lo largo de las corridas")
+    plt.xlabel('Tirada')
+    plt.ylabel('Moda')
+    plt.show()
+
+def graficarDesviacion():
+    s = 0
+
+def graficarVarianza():
+    d = 0
 
 
 
 MIN = 0
 MAX = 36
-SIZE = 100
+SIZE = 10
 #tendencias
 mediaList = []
 medianaList = []
@@ -84,6 +112,11 @@ print(modaList)
 
 
 graficarMedia()
+graficarMediana()
+graficarModa()
+
+
+  
 """
 1. La ruleta va desde el 0 al 36 inclusive 
 
