@@ -42,37 +42,41 @@ def proccessData(itemList):
 
 
 def graficarMedia():
+    plt.figure(figsize=(18,10))
     plt.plot(mediaList) 
-    plt.title("Evolución de la Media")
+    plt.title("Media a lo largo de "+str(SIZE)+ " tiradas")
     blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
     plt.legend(handles=[blue_patch])
     plt.xlabel('Tirada')
     plt.ylabel('Valor de la media')
-    plt.show()
+    plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS.svg")
 
 def graficarMediana():
+    plt.figure(figsize=(18,10))
     plt.plot(medianaList) 
-    plt.title("Evolución de la Mediana")
+    plt.title("Mediana a lo largo de "+str(SIZE)+" tiradas")
     blue_patch = mpatches.Patch(color='red', label='Valor de la mediana en los distintos puntos')
     plt.legend(handles=[blue_patch])
     plt.xlabel('Tirada')
     plt.ylabel('Valor de la mediana')
-    plt.show()
+    plt.savefig("MEDIANA_"+str(SIZE)+"_TIRADAS.svg")
+    
 
 def graficarModa():
     numeros = []
     cantidades = []
-    
+    plt.figure(figsize=(18,10))
     for y in modaList:
         numeros.append(y[0][0])
         cantidades.append(y[1][0])
     plt.bar(range(SIZE),numeros,edgecolor="black") 
     plt.xticks(range(SIZE),range(SIZE))
     plt.ylim(min(numeros)-2,max(numeros)+1)
-    plt.title("Moda a lo largo de las corridas")
+    plt.title("Moda a lo largo de "+str(SIZE)+ " tiradas")
     plt.xlabel('Tirada')
     plt.ylabel('Moda')
-    plt.show()
+    plt.savefig("MODA_"+str(SIZE)+"_TIRADAS.svg")
+    
 
 def graficarDesviacion():
     s = 0
@@ -80,11 +84,50 @@ def graficarDesviacion():
 def graficarVarianza():
     d = 0
 
+def graficarFrecuenciasAbsolutas(): #Bastones
+    vals = [] #lista de conteos
+    keys = [] #lista de numeros
+    for key in countedList.keys():
+        keys.append(key)
+    for value in countedList.values():
+        vals.append(value)
+    plt.figure(figsize=(18,10))
+    
+    for index in range(len(vals)):
+        plt.bar(keys[index],vals[index],align="center",width=0.1)
+    plt.xticks(keys)
+    plt.yticks(vals)
+    
+    plt.title("Frecuencias absolutas para "+str(SIZE)+ " tiradas")
+    plt.xlabel("Números")
+    plt.ylabel("Frecuencia")
+    
+    plt.savefig("FRECUENCIAS_ABSOLTUAS_"+str(SIZE)+"_TIRADAS.svg")
+    
+def graficarFrecuenciasRelativas():
+    vals = [] #lista de conteos
+    keys = [] #lista de numeros
+    for key in countedList.keys():
+        keys.append(key)
+    for value in countedList.values():
+        vals.append(value/SIZE)
+    plt.figure(figsize=(18,10))
+    
+    for index in range(len(vals)):
+        plt.bar(keys[index],vals[index],align="center",width=0.1)
+    plt.xticks(keys)
+    plt.yticks(vals)
+    
+    plt.title("Frecuencias relativas para "+str(SIZE)+ " tiradas")
+    plt.xlabel("Números")
+    plt.ylabel("Frecuencia")
+    
+    plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS.svg")
 
 
 MIN = 0
 MAX = 36
-SIZE = 10
+SIZE = 100
 #tendencias
 mediaList = []
 medianaList = []
@@ -93,13 +136,14 @@ modaList = []
 desviacionList = []
 varianzaList = []
 
+listaItems = []
 
 
 spectedNumber = getRandomInt(MIN,MAX)
-li = getRandomIntList(SIZE)
-print(li)
-countedList = countNumbers(li)
-print("media")
+listaItems = getRandomIntList(SIZE)
+print(listaItems)
+countedList = countNumbers(listaItems)
+"""print("media")
 print(mediaList)
 print("mediana")
 print(medianaList)
@@ -108,12 +152,14 @@ print(desviacionList)
 print("varianza")
 print(varianzaList)
 print("moda")
-print(modaList)
+print(modaList)"""
 
 
-graficarMedia()
-graficarMediana()
-graficarModa()
+#graficarMedia()
+#graficarMediana()
+#graficarModa()
+#graficarFrecuenciasAbsolutas()
+graficarFrecuenciasRelativas()
 
 
   
