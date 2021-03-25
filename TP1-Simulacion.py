@@ -8,15 +8,14 @@ import matplotlib.patches as mpatches
 
 
 
-def getRandomInt(min,max):
-
-    number = random.randint(min,max)
+def getRandomInt():
+    number = random.randint(MIN,MAX)
     return number
 
-def getRandomIntList(size):
+def getRandomIntList():
     randomList = []
-    for x in range(size):
-        randomList.append(getRandomInt(0,36))
+    for x in range(MIN,SIZE):
+        randomList.append(getRandomInt())
         proccessData(randomList)   
            
     return randomList
@@ -45,11 +44,12 @@ def graficarMedia():
     plt.figure(figsize=(18,10))
     plt.plot(mediaList) 
     plt.title("Media a lo largo de "+str(SIZE)+ " tiradas")
+    plt.barh(PROM,width=(len(mediaList)), height=0.1, color="orange")
     blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
     plt.legend(handles=[blue_patch])
     plt.xlabel('Tirada')
     plt.ylabel('Valor de la media')
-    plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS.svg")
+    plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT))
 
 def graficarMediana():
     plt.figure(figsize=(18,10))
@@ -59,7 +59,7 @@ def graficarMediana():
     plt.legend(handles=[blue_patch])
     plt.xlabel('Tirada')
     plt.ylabel('Valor de la mediana')
-    plt.savefig("MEDIANA_"+str(SIZE)+"_TIRADAS.svg")
+    plt.savefig("MEDIANA_"+str(SIZE)+"_TIRADAS"+str(EXT))
     
 
 def graficarModa():
@@ -69,13 +69,14 @@ def graficarModa():
     for y in modaList:
         numeros.append(y[0][0])
         cantidades.append(y[1][0])
-    plt.bar(range(SIZE),numeros,edgecolor="black") 
-    plt.xticks(range(SIZE),range(SIZE))
-    plt.ylim(min(numeros)-2,max(numeros)+1)
+    plt.bar(range(SIZE),numeros) 
+    
+    plt.yticks(range(0,MAX),range(0,MAX))
+    plt.ylim(min(numeros)-1,max(numeros)+1)
     plt.title("Moda a lo largo de "+str(SIZE)+ " tiradas")
     plt.xlabel('Tirada')
     plt.ylabel('Moda')
-    plt.savefig("MODA_"+str(SIZE)+"_TIRADAS.svg")
+    plt.savefig("MODA_"+str(SIZE)+"_TIRADAS"+str(EXT))
     
 
 def graficarDesviacion():
@@ -85,7 +86,7 @@ def graficarVarianza():
     d = 0
 
 def graficarFrecuenciasAbsolutas(): #Bastones
-    vals = [] #lista de conteos
+    vals = [] #lista de frecuencias relativas
     keys = [] #lista de numeros
     for key in countedList.keys():
         keys.append(key)
@@ -102,7 +103,7 @@ def graficarFrecuenciasAbsolutas(): #Bastones
     plt.xlabel("Números")
     plt.ylabel("Frecuencia")
     
-    plt.savefig("FRECUENCIAS_ABSOLTUAS_"+str(SIZE)+"_TIRADAS.svg")
+    plt.savefig("FRECUENCIAS_ABSOLTUAS_"+str(SIZE)+"_TIRADAS"+str(EXT))
     
 def graficarFrecuenciasRelativas():
     vals = [] #lista de conteos
@@ -122,44 +123,36 @@ def graficarFrecuenciasRelativas():
     plt.xlabel("Números")
     plt.ylabel("Frecuencia")
     
-    plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS.svg")
+    plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS"+str(EXT))
 
 
-MIN = 0
-MAX = 36
-SIZE = 100
-#tendencias
-mediaList = []
-medianaList = []
-modaList = []
-#Dispersion 
-desviacionList = []
-varianzaList = []
+sizes = [100,500,1000]
 
-listaItems = []
+for size in sizes:
+    MIN = 0
+    MAX = 36
+    SIZE = size
+    PROM =( MAX-MIN )/ 2
+    EXT = ".png"
+    #tendencias
+    mediaList = []
+    medianaList = []
+    modaList = []
+    #Dispersion 
+    desviacionList = []
+    varianzaList = []
 
-
-spectedNumber = getRandomInt(MIN,MAX)
-listaItems = getRandomIntList(SIZE)
-print(listaItems)
-countedList = countNumbers(listaItems)
-"""print("media")
-print(mediaList)
-print("mediana")
-print(medianaList)
-print("desviacion estandar")
-print(desviacionList)
-print("varianza")
-print(varianzaList)
-print("moda")
-print(modaList)"""
+    listaItems = []
 
 
-#graficarMedia()
-#graficarMediana()
-#graficarModa()
-#graficarFrecuenciasAbsolutas()
-graficarFrecuenciasRelativas()
+    spectedNumber = getRandomInt()
+    listaItems = getRandomIntList()
+    countedList = countNumbers(listaItems)
+    #graficarMedia()
+    graficarMediana()
+    #graficarModa()
+    ##graficarFrecuenciasAbsolutas()
+    #graficarFrecuenciasRelativas()
 
 
   
