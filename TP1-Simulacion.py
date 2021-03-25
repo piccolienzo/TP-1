@@ -28,7 +28,7 @@ def countNumbers(rList):
             countList[item] +=1
         else:
             countList[item]=1
-    """countList = collections.OrderedDict(sorted(countList.items()))"""
+    
     return countList
 
 def proccessData(itemList):
@@ -46,20 +46,21 @@ def graficarMedia():
     plt.title("Media a lo largo de "+str(SIZE)+ " tiradas")
     plt.barh(PROM,width=(len(mediaList)), height=0.1, color="orange")
     blue_patch = mpatches.Patch(color='blue', label='Promedio de la muestra')
-    plt.legend(handles=[blue_patch])
+    orange_patch = mpatches.Patch(color='orange', label='Promedio esperado')
+    plt.legend(handles=[blue_patch,orange_patch])
     plt.xlabel('Tirada')
     plt.ylabel('Valor de la media')
-    plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT))
+    plt.savefig("MEDIA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
 
 def graficarMediana():
     plt.figure(figsize=(18,10))
     plt.plot(medianaList) 
     plt.title("Mediana a lo largo de "+str(SIZE)+" tiradas")
-    blue_patch = mpatches.Patch(color='red', label='Valor de la mediana en los distintos puntos')
-    plt.legend(handles=[blue_patch])
     plt.xlabel('Tirada')
     plt.ylabel('Valor de la mediana')
-    plt.savefig("MEDIANA_"+str(SIZE)+"_TIRADAS"+str(EXT))
+    plt.savefig("MEDIANA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
     
 
 def graficarModa():
@@ -74,16 +75,30 @@ def graficarModa():
     plt.yticks(range(0,MAX),range(0,MAX))
     plt.ylim(min(numeros)-1,max(numeros)+1)
     plt.title("Moda a lo largo de "+str(SIZE)+ " tiradas")
-    plt.xlabel('Tirada')
+    plt.xlabel('Tiradas')
     plt.ylabel('Moda')
-    plt.savefig("MODA_"+str(SIZE)+"_TIRADAS"+str(EXT))
+    plt.savefig("MODA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
+    
     
 
 def graficarDesviacion():
-    s = 0
+    plt.figure(figsize=(18,10))
+    plt.plot(desviacionList) 
+    plt.title("Desviación estándar a lo largo de "+str(SIZE)+ " tiradas")
+    plt.xlabel('Tiradas')
+    plt.ylabel('Valor de la desviación estándar')
+    plt.savefig("DESVIACION_ESTANDAR_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
 
 def graficarVarianza():
-    d = 0
+    plt.figure(figsize=(18,10))
+    plt.plot(varianzaList) 
+    plt.title("Varianza a lo largo de "+str(SIZE)+ " tiradas")
+    plt.xlabel('Tiradas')
+    plt.ylabel('Valor de la varianza')
+    plt.savefig("VARIANZA_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
 
 def graficarFrecuenciasAbsolutas(): #Bastones
     vals = [] #lista de frecuencias relativas
@@ -103,7 +118,8 @@ def graficarFrecuenciasAbsolutas(): #Bastones
     plt.xlabel("Números")
     plt.ylabel("Frecuencia")
     
-    plt.savefig("FRECUENCIAS_ABSOLTUAS_"+str(SIZE)+"_TIRADAS"+str(EXT))
+    plt.savefig("FRECUENCIAS_ABSOLUTAS_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
     
 def graficarFrecuenciasRelativas():
     vals = [] #lista de conteos
@@ -123,7 +139,8 @@ def graficarFrecuenciasRelativas():
     plt.xlabel("Números")
     plt.ylabel("Frecuencia")
     
-    plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS"+str(EXT))
+    plt.savefig("FRECUENCIAS_RELATIVAS_"+str(SIZE)+"_TIRADAS"+str(EXT),bbox_inches='tight')
+    plt.close()
 
 
 sizes = [100,500,1000]
@@ -133,7 +150,7 @@ for size in sizes:
     MAX = 36
     SIZE = size
     PROM =( MAX-MIN )/ 2
-    EXT = ".png"
+    EXT = ".svg"
     #tendencias
     mediaList = []
     medianaList = []
@@ -148,15 +165,10 @@ for size in sizes:
     spectedNumber = getRandomInt()
     listaItems = getRandomIntList()
     countedList = countNumbers(listaItems)
-    #graficarMedia()
+    graficarMedia()
     graficarMediana()
-    #graficarModa()
-    ##graficarFrecuenciasAbsolutas()
-    #graficarFrecuenciasRelativas()
-
-
-  
-"""
-1. La ruleta va desde el 0 al 36 inclusive 
-
-"""
+    graficarModa()
+    graficarFrecuenciasAbsolutas()
+    graficarFrecuenciasRelativas()
+    graficarVarianza()
+    graficarDesviacion()
